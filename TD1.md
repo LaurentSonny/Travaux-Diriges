@@ -1,7 +1,6 @@
 # Travaux-Diriges
-Tous les TD
 TD 1
-// Code pour le calcul du volumme d'un pavé droit
+// Code pour le calcul du volume d'un pavé droit
 import java.util.Scanner;
 
 public class Class_1 {	
