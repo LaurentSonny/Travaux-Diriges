@@ -1,0 +1,118 @@
+# Travaux-Diriges
+import java.util.Scanner;
+
+public class TD2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+	// Exercice 3.1 ; Choix de l'exercice 		
+		System.out.println("Bienvenue ,veuillez choisir votre exercice :\r\n 1. Regles\r\n 2. Puissance\r\n 3. Multiplications\r\n 4. Nombres premiers\r\n 5. Formes");
+		Scanner scan = new Scanner(System.in);
+		Integer reponse = scan.nextInt();
+		switch (reponse) {
+		case 1:
+			//Exercice 3.2 :La Règle graduée
+				Integer i=0;
+				String regle="", intervalle ="";
+				System.out.println("Bienvenue ,veuillez choisir la longueur de votre regle");
+				Integer longueur = scan.nextInt();
+				System.out.println("Maintenant ,veuillez choisir la longueur de votre intervalle");
+				Integer cran = scan.nextInt();
+				for (i =0;i<cran; ++i) {
+					intervalle += "-";
+				}
+				for ( i=0 ; i<longueur; ++i) {
+						regle +=  intervalle + "|";
+				}
+				System.out.println("|" +regle);		
+		case 2 :
+			//Flemme
+		case 3 :
+			// Exercice 3.3 :Table de multiplication
+				Integer j,k;
+				System.out.println("Bonjour, Voici le tableau de multiplications");
+				for (j =0;j<10; ++j) {
+					for (k =0;k<10; ++k) {
+						Integer nombre = j*k;
+						String Lettre = nombre.toString();
+						if (Lettre.length() == 1) {
+							Lettre += " ";
+						}					
+						System.out.print(Lettre +" ");
+					}
+					System.out.println("\r\n");
+				}
+		case 4 :
+		//Exercice 3.4 : Nombre premier
+			Boolean premier = true ;
+			System.out.println("Bienvenue ,veuillez choisir un nombre positif au hasard");
+			Double nombre = scan.nextDouble();
+			if (nombre < 1) {
+				for ( i =2 ; i< nombre ; ++i ) {
+					System.out.println(Math.floor(nombre/i));
+					if ( Math.floor(nombre/i) == nombre / i) {
+					premier = false;
+					}
+				}
+				System.out.println(premier.toString());
+			}
+		case 5 :
+			System.out.println("Bienvenue ,veuillez choisir votre forme :\r\n 1. Triangle 1\r\n 2. Triangle 2\r\n 3. Rectangle\r\n 4. Cercle");
+			Integer reponse2 = scan.nextInt();
+			switch (reponse2) {	
+			case 1 :
+				//Execice 3.6.1 : Triangle 1		
+					System.out.println(" Bienvenue, veuillez choisir le coté de votre triangle");
+					Integer coté =scan.nextInt();
+					for ( i = 0 ; i < coté ; ++i ) {
+						for ( j=0 ; j<i+1 ; ++j ) {
+							System.out.print("*");
+						}
+						System.out.print("\r\n");
+					}
+			case 2 :
+				// Exercice 3.6.2 : Triangle 2
+					System.out.println(" Bienvenue, veuillez choisir le coté de votre triangle");
+					coté =scan.nextInt();
+					for ( i = 0 ; i < coté ; ++i ) {
+						for ( j=i ; j<coté ; ++j ) {
+							System.out.print(" ");
+						}
+						for ( j=0 ; j<i+1 ; ++j ) {
+							System.out.print("*");
+						}
+						System.out.print("\r\n");
+					}
+			case 3 :
+				// Exercice 3.6.3 : Rectangle
+					System.out.println(" Bienvenue, veuillez choisir le coté de votre rectangle");
+					coté =scan.nextInt();
+					for ( i = 0 ; i < coté ; ++i ) {
+						for ( j=0 ; j<coté ; ++j ) {
+							System.out.print("*");
+						}
+						System.out.print("\r\n");
+					}
+			case 4 :
+				// Exercice 3.6.3 : Cercle
+				Integer interne , l ;
+				System.out.println(" Bienvenue, veuillez choisir le rayon de votre cercle");
+				Integer rayon = scan.nextInt();
+				for ( i=0 ; i<rayon+1 ; ++i ) {
+					for ( j=0 ; j<rayon-i ; ++j ) {
+						System.out.print(" ");
+					}
+					System.out.print("*");
+					for ( k=1 ; k<2*i ; k+=2 ) {
+						System.out.print("  ");
+					}
+					System.out.print("*\r\n");
+				}
+				
+			}
+		
+		}	
+		scan.close();
+	}
+}
+
