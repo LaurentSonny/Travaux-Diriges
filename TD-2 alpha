@@ -24,48 +24,52 @@ public class Class_3 {
 		int valeurs = tab.length * tab[0].length;
 		Integer inferieurs = denombrement(tab, moyenne);
 		Integer superieurouegal = valeurs - denombrement(tab, moyenne);
-		double[] echantillon_inferieur = new double[inferieurs];
-		double[] echantillon_superieur_egal = new double[superieurouegal];
 		System.out.println("La moyenne est : " + moyenne);
-		recherche(tab, Math.floor(moyenne));
-		echantillon_inferieur(tab, moyenne, echantillon_inferieur);
-		echantillon_superieur_egal(tab, moyenne, echantillon_superieur_egal);
-		System.out.print("Tableau inferieur : |");
-		for (int j = 0; j < echantillon_superieur_egal.length; ++j) {
-			System.out.print(echantillon_superieur_egal[j] + "|");
-		}
-		System.out.print("\r\nTableau supérieur : |");
-		for (int j = 0; j < tab.length; ++j) {
-			System.out.print(echantillon_inferieur[j] + "|");
+		System.out.println("Les coordonnées de la moyenne sont : [" + recherche(tab, Math.floor(moyenne))[1] + ";"
+				+ recherche(tab, Math.floor(moyenne))[0] + "]");
+		System.out.print("Tableau inferieur : ");
+		affichage_plat(echantillon_inferieur(tab, moyenne, inferieurs));
+		System.out.print("Tableau supérieur : ");
+		affichage_plat(echantillon_superieur_egal(tab, moyenne, superieurouegal));
+		System.out.print("Tableau trié : ");
+		affichage_plat(tri_a_bulle(aplanissement(tab, valeurs)));
+		System.out.print("\r\n");
+		System.out.print("Rechercher une valeur ? ");
+		int reponse = scan.nextInt();
+		System.out.print("Son rang est : " + Dichotomie(aplanissement(tab, valeurs), reponse));
+	}
+
+	public static void affichage_plat(double[] Liste) {
+		System.out.print("|");
+		for (int j = 0; j < Liste.length; ++j) {
+			System.out.print(Liste[j] + "|");
 		}
 		System.out.print("\r\n");
-		for (double i : tri(aplanissement(tab, valeurs))) {
-			System.out.print("|" + i + "|");
-		}
 	}
 
 	public static double moyenne(double tableau[][]) {
 		double M = 0;
-		for (int i = 0; i < tableau[1].length; ++i) {
-			for (int j = 0; j < tableau.length; ++j) {
-				M += tableau[j][i];
+		for (double[] i : tableau) {
+			for (double j : i) {
+				M += j;
 			}
 		}
 		return (M / (tableau[1].length * tableau.length));
 	}
 
-	public static void recherche(double tableau[][], double moyenne) {
-		for (int i = 0; i < tableau[1].length; ++i) {
-			for (int j = 0; j < tableau.length; ++j) {
-				if (tableau[j][i] == moyenne) {
-					System.out.println("Les coordonnées de la moyenne sont : [" + j + ";" + i + "]");
+	public static int[] recherche(double tableau[][], double moyenne) {
+		int[] coordonees = new int[2];
+		for (coordonees[0] = 0; coordonees[0] < tableau[1].length - 1; ++coordonees[0]) {
+			for (coordonees[1] = 0; coordonees[1] < tableau.length - 1; ++coordonees[1]) {
+				if (tableau[coordonees[1]][coordonees[0]] == moyenne) {
+					return (coordonees);
 				}
 			}
 		}
-		System.out.println("La moyenne n'est pas dans le tableau.");
+		return (coordonees);
 	}
 
-	public static Integer denombrement(double tableau[][], double moyenne) {
+	public static int denombrement(double tableau[][], double moyenne) {
 		Integer inferieurs = 0;
 		for (int i = 0; i < tableau[1].length; ++i) {
 			for (int j = 0; j < tableau.length; ++j) {
@@ -76,63 +80,60 @@ public class Class_3 {
 		return inferieurs;
 	}
 
-	public static double[] echantillon_inferieur(double tableau[][], double moyenne, double[] inf) {
+	public static double[] echantillon_inferieur(double tableau[][], double moyenne, int inferieurs) {
+		double[] echantillon_inferieur = new double[inferieurs];
 		Integer increment = 0;
 		for (int i = 0; i < tableau[1].length; ++i) {
 			for (int j = 0; j < tableau.length; ++j) {
 				if (tableau[j][i] < moyenne) {
-					inf[increment] = tableau[j][i];
+					echantillon_inferieur[increment] = tableau[j][i];
 					++increment;
 				}
 			}
 		}
-		return inf;
+		return echantillon_inferieur;
 	}
 
-	public static double[] echantillon_superieur_egal(double tableau[][], double moyenne, double[] sup) {
+	public static double[] echantillon_superieur_egal(double tableau[][], double moyenne, int superieurouegal) {
+		double[] echantillon_superieur_egal = new double[superieurouegal];
 		Integer increment = 0;
 		for (int i = 0; i < tableau[1].length; ++i) {
 			for (int j = 0; j < tableau.length; ++j) {
 				if (tableau[j][i] >= moyenne) {
-					sup[increment] = tableau[j][i];
+					echantillon_superieur_egal[increment] = tableau[j][i];
 					++increment;
 				}
 			}
 		}
-		return sup;
+		return echantillon_superieur_egal;
 	}
 
 	public static double[] aplanissement(double tableau[][], int valeurs) {
 		double[] tableau_a_plat = new double[valeurs];
 		int increment = 0;
-		for (int i = 0; i < tableau[1].length; ++i) {
-			for (int j = 0; j < tableau.length; ++j) {
-				tableau_a_plat[increment] = tableau[j][i];
+		for (double[] i : tableau) {
+			for (double j : i) {
+				tableau_a_plat[increment] = j;
 				++increment;
 			}
 		}
 		return tableau_a_plat;
 	}
 
-	public static double[] tri(double[] tbl_plat) {
-		boolean changmnt ;
-		double tampon = 0, tampon2 =0;
-		changmnt = true;
-		while (changmnt = true) {
-			for (int i = 0; i < tbl_plat.length-1; ++i) {
-				changmnt = false;
+	public static double[] tri_a_bulle(double[] tbl_plat) {
+		boolean changmnt = true;
+		double tampon = 0;
+
+		while (changmnt == true) {
+			changmnt = false;
+			for (int i = 0; i < tbl_plat.length - 1; ++i) {
 				if (tbl_plat[i] > tbl_plat[(i + 1)]) {
-					System.out.print(tbl_plat[i]+"|"+tbl_plat[(i + 1)]+"\r\n");
 					changmnt = true;
 					tampon = tbl_plat[(i + 1)];
-					tampon2 = tbl_plat[i];
+					tbl_plat[(i + 1)] = tbl_plat[i];
 					tbl_plat[i] = tampon;
-					tbl_plat[(i + 1)] = tampon2;
 				}
 			}
-		}
-		for (double i : tbl_plat) {
-			System.out.print("|" + i);
 		}
 		return tbl_plat;
 	}
@@ -142,6 +143,24 @@ public class Class_3 {
 			System.out.print("|" + i);
 		}
 		System.out.print("|\r\n");
+	}
+
+	public static int Dichotomie(double[] tab, double valeur) {
+		int debut = 0, fin = 0, milieu = 0;
+		milieu = (int) (tab.length / 2);
+		fin = tab.length - 1;
+		while (debut != fin) {
+			if (tab[milieu] == valeur) {
+				return (milieu);
+			} else if (tab[milieu] > valeur) {
+				debut = milieu;
+				milieu = (int) (fin - debut) / 2;
+			} else {
+				fin = milieu;
+				milieu = (int) (fin - debut) / 2;
+			}
+		}
+		return (0);
 	}
 
 }
