@@ -1,30 +1,32 @@
 # Travaux-Diriges
 TD 4
-
 public class Class_4 {
-
+	
 	public static void main(String[] args) {
 		int[] tableau = Generateur(10);
 		int long_tab=tableau.length-1;
+		System.out.print("Tableau non trié : ");
 		Affichage(tableau);
-		Trier(tableau,0,long_tab);
-		
-
+		tableau=Trier(tableau,0,long_tab);
+		System.out.print("Tableau trié : ");
+		Affichage(tableau);
 	}
 
-	public static void Trier(int[] tableau, int debut, int fin) {
+	public static int [] Trier(int[] tableau, int debut, int fin) {
+		int milieu = debut + ((int) ((fin - debut) / 2));
 		if (fin - debut == 1) {
 			int tampon = 0;
 			if (tableau[debut] > tableau[fin]) {
 				tampon = tableau[debut];
 				tableau[debut] = tableau[fin];
 				tableau[fin] = tampon;
+				return (tableau);
 			}
 		}
-		int milieu = debut + ((int) ((fin - debut) / 2));
-		Trier(tableau, debut, milieu);
-		Trier(tableau, milieu, fin);
-		Affichage(tableau);
+		else {
+			return (Trier(tableau, debut, milieu));
+		}
+		return (Trier(tableau, milieu, fin));
 	}
 
 	public static void Affichage(int[] tableau) {
@@ -32,6 +34,7 @@ public class Class_4 {
 		for (int i : tableau) {
 			System.out.print(i + "|");
 		}
+		System.out.print("\r\n");
 	}
 
 	public static int[] Generateur(int longueur) {
@@ -42,4 +45,3 @@ public class Class_4 {
 		return (tab);
 	}
 }
-
