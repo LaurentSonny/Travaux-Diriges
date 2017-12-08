@@ -1,0 +1,119 @@
+
+Motus {
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Motus extends Dictionnaire {
+
+	public Motus(String mot, ArrayList<String> dico) {
+		super(dico);
+		// TODO Auto-generated constructor stub
+	}
+
+	public static void main(String[] args) {
+		boolean reussi = false;
+		String mot = "";
+		List<String> listes = null;
+		Scanner scan = new Scanner(System.in);
+		Path path = Paths.get("/mnt/monster/home/eleves/s/sola10780/Documents/Dico.txt");
+		try {
+			listes = Files.readAllLines(path);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Dictionnaire dico1 = new Dictionnaire(listes);
+		mot = dico1.Choose();
+		System.out.println(mot);
+		System.out.println(dico1.Find("abattit"));
+		//System.out.println(dico1.evaluation(mot, "abattit"));
+		while (!(reussi)) {
+			String entrée = scan.nextLine();
+			if (!(entrée.equals(mot))) {
+				if (entrée .length() != mot.length()) {
+					System.out.println("Erreur");
+				} else {
+					System.out.println(dico1.evaluation(mot, entrée));
+					if (entrée.equals(mot)) {
+						reussi=true;
+						System.out.println("Félicitations");
+					}
+				}
+			}
+		}
+	}
+
+}
+
+}
+
+Dictionnaire {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class Dictionnaire {
+	List<String> dico = new ArrayList<String>();
+
+	public Dictionnaire(List<String> essai) {
+		// TODO Auto-generated constructor stub
+		this.dico = essai;
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public boolean Find(String mot) {
+		int longueur = dico.size();
+		for (int i = 0; i < longueur; ++i) {
+			if (mot.equals(dico.get(i))) {
+				return (true);
+			}
+		}
+		return (false);
+	}
+
+	public String Choose() {
+		Random random = new Random();
+		int longueur = dico.size();
+		int aléatoire = random.nextInt(longueur);
+		String retour = dico.get(aléatoire);
+		return (retour);
+	}
+
+	public String evaluation(String mot, String proposition) {
+		String[] decoupe = new String[mot.length() ];
+		for (char k = 0; k < proposition.length(); ++k) {
+			if (mot.charAt(k) == proposition.charAt (k)) {
+				decoupe[k] = "o";
+			} else {
+
+			}
+		}
+		for (int i = 0; i < proposition.length(); ++i) {
+			for (int j = 0; j < mot.length(); ++j) {
+				if (mot.charAt(j) == proposition.charAt(j)) {
+					decoupe[i] = "-";
+				}
+			}
+			if (decoupe[i] != "o" && decoupe[i] != "-") {
+				decoupe[i] = "x";
+			}
+		}
+		String retour = "";
+		for (String lettre : decoupe) {
+
+			retour += lettre;
+		}
+		return (retour);
+	}
+
+}
+
+}
